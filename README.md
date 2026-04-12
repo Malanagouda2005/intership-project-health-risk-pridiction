@@ -126,9 +126,9 @@ Contributors can:
 
 ## 🙌 Author
 
-**Mallanagouda Hosamani**
-**vinay kumabar**
-**shaskank m k **
+**Mallanagouda Hosamani**<br>
+**vinay kumabar**<br>
+**shaskank mk **<br>
 
 ---
 
