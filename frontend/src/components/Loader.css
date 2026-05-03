@@ -1,0 +1,26 @@
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 16, 46, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.loader-spinner {
+  width: 72px;
+  height: 72px;
+  border: 10px solid rgba(255, 255, 255, 0.2);
+  border-top: 10px solid transparent;
+  border-right: 10px solid #5fb8ff;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  box-shadow: 0 0 30px rgba(95, 184, 255, 0.4);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

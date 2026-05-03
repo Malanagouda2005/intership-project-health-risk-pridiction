@@ -1,0 +1,115 @@
+.symptoms-card {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(80, 143, 255, 0.16);
+}
+
+.symptoms-header h3 {
+  margin: 0 0 8px;
+  color: #0f234f;
+  font-size: 1.1rem;
+}
+
+.symptoms-header p {
+  margin: 0;
+  color: #5b6c95;
+  font-size: 0.96rem;
+}
+
+.symptom-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.symptom-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(78, 118, 247, 0.2);
+  background: #f7f9ff;
+  color: #2f4373;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.symptom-chip.selected {
+  background: linear-gradient(135deg, #4e76f7 0%, #7e53d0 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.symptom-chip:hover {
+  transform: translateY(-2px);
+  border-color: #4e76f7;
+}
+
+.custom-symptom-row {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+.custom-symptom-row input {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(139, 152, 204, 0.4);
+  font-size: 1rem;
+  color: #162048;
+  background: #fbfcff;
+  transition: border-color 0.3s ease;
+}
+
+.custom-symptom-row input:focus {
+  outline: none;
+  border-color: #4e76f7;
+  background: #ffffff;
+}
+
+.add-symptom-btn {
+  border: none;
+  background: linear-gradient(135deg, #4e76f7 0%, #7e53d0 100%);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.add-symptom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(78, 118, 247, 0.25);
+}
+
+.add-symptom-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .symptom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-symptom-row {
+    grid-template-columns: 1fr;
+  }
+
+  .add-symptom-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

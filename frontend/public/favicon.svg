@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc66;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Heart icon background -->
+  <circle cx="16" cy="16" r="15" fill="url(#grad1)" opacity="0.95"/>
+  <!-- Heart shape -->
+  <path d="M16 26 C10 22 5 18 5 13 C5 9 8 6 11 6 C13 6 15 8 16 10 C17 8 19 6 21 6 C24 6 27 9 27 13 C27 18 22 22 16 26 Z" fill="white"/>
+</svg>

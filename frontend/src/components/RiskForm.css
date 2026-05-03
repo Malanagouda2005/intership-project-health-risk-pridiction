@@ -1,0 +1,224 @@
+.risk-form-card {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(78, 118, 247, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 24, 80, 0.08);
+  padding: 28px;
+  animation: cardSlideIn 0.5s ease;
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel-title {
+  margin-bottom: 24px;
+}
+
+.panel-title h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #101f3e;
+}
+
+.panel-title p {
+  margin: 10px 0 0;
+  color: #5b6c95;
+  font-size: 0.95rem;
+}
+
+.input-section {
+  margin-top: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(78, 118, 247, 0.1);
+}
+
+.input-section:last-of-type {
+  border-bottom: none;
+}
+
+.input-section h3 {
+  margin-bottom: 16px;
+  color: #101f3e;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.field-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field-grid label {
+  display: grid;
+  gap: 10px;
+  color: #31406c;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.field-grid label svg {
+  margin-right: 8px;
+  color: #4e76f7;
+  font-size: 1rem;
+}
+
+.field-grid input,
+.field-grid select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(139, 152, 204, 0.4);
+  font-size: 1rem;
+  color: #162048;
+  background: #fbfcff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field-grid input:focus,
+.field-grid select:focus {
+  outline: none;
+  border-color: #4e76f7;
+  box-shadow: 0 0 0 3px rgba(78, 118, 247, 0.1);
+  background: #ffffff;
+}
+
+.field-grid select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234e76f7' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.bmi-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d3d8c;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.toggle-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(78, 118, 247, 0.2);
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: #f7f9ff;
+  color: #2f4373;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.toggle:hover {
+  transform: translateY(-2px);
+  border-color: #4e76f7;
+}
+
+.toggle.active {
+  background: linear-gradient(135deg, #4e76f7 0%, #7e53d0 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(78, 118, 247, 0.25);
+}
+
+.form-error {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #ffe8e8;
+  color: #b52020;
+  border: 1px solid rgba(209, 67, 67, 0.18);
+  border-left: 4px solid #d14343;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.predict-button {
+  margin-top: 28px;
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #4e76f7 0%, #7e53d0 100%);
+  color: white;
+  font-weight: 700;
+  padding: 18px;
+  border-radius: 18px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.predict-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(78, 118, 247, 0.25);
+}
+
+.predict-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.predict-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 860px) {
+  .field-grid,
+  .toggle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .risk-form-card {
+    padding: 20px;
+  }
+
+  .panel-title h2 {
+    font-size: 1.4rem;
+  }
+
+  .input-section {
+    margin-top: 20px;
+    padding-bottom: 20px;
+  }
+}

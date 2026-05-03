@@ -1,0 +1,120 @@
+.image-upload-card {
+  position: relative;
+  padding: 28px;
+  border-radius: 24px;
+  border: 2px dashed rgba(64, 138, 255, 0.45);
+  background: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-upload-card:hover {
+  border-color: #4e76f7;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(78, 118, 247, 0.12);
+}
+
+.upload-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: rgba(78, 118, 247, 0.16);
+  color: #2563eb;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  transition: all 0.3s ease;
+}
+
+.image-upload-card:hover .upload-icon {
+  background: rgba(78, 118, 247, 0.26);
+  transform: scale(1.1);
+}
+
+.upload-text h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #101f3e;
+}
+
+.upload-text p {
+  margin: 8px 0 0;
+  color: #576a95;
+  font-size: 0.9rem;
+}
+
+.upload-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-preview-block {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(78, 118, 247, 0.1);
+}
+
+.preview-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4e76f7;
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.preview-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.preview-wrapper img {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(48, 73, 148, 0.15);
+  border: 2px solid rgba(78, 118, 247, 0.12);
+}
+
+.remove-image {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  color: #d14343;
+  background: rgba(209, 67, 67, 0.08);
+  padding: 12px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.remove-image:hover {
+  background: rgba(209, 67, 67, 0.16);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .image-upload-card {
+    padding: 20px;
+  }
+
+  .preview-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .preview-wrapper img {
+    width: 100%;
+    height: auto;
+    min-height: 128px;
+  }
+}
