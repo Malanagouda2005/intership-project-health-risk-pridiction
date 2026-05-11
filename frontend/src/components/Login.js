@@ -29,12 +29,12 @@ const Login = ({ onLogin }) => {
 
   // Log platform info on mount
   useEffect(() => {
-    console.log('[Login] Platform Detection:');
-    console.log('  - Is Android:', isAndroidPlatform());
-    console.log('  - Is Capacitor WebView:', isCapacitorWebView());
-    console.log('  - User Agent:', navigator.userAgent);
-    console.log('  - Window Location:', window.location.href);
-    console.log('  - Backend URL:', apiBase);
+    // console.log('[Login] Platform Detection:');
+    // console.log('  - Is Android:', isAndroidPlatform());
+    // console.log('  - Is Capacitor WebView:', isCapacitorWebView());
+    // console.log('  - User Agent:', navigator.userAgent);
+    // console.log('  - Window Location:', window.location.href);
+    // console.log('  - Backend URL:', apiBase);
   }, [apiBase]);
 
   // Test backend connection
@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
       try {
         setBackendStatus('checking');
         setBackendError('');
-        console.log('[Login] Sending status request to', `${apiBase}/api/status`);
+        // console.log('[Login] Sending status request to', `${apiBase}/api/status`);
 
         const timeoutId = window.setTimeout(() => controller.abort(), 5000);
         const response = await fetch(`${apiBase}/api/status`, {
@@ -63,7 +63,7 @@ const Login = ({ onLogin }) => {
           signal: controller.signal
         });
         window.clearTimeout(timeoutId);
-        console.log('[Login] Status response', response.status, response.statusText);
+        // console.log('[Login] Status response', response.status, response.statusText);
 
         if (!isMounted) return;
 
@@ -147,10 +147,10 @@ const Login = ({ onLogin }) => {
         email: formData.email,
         password: formData.password
       };
-      console.log('[Login] Sending request to', endpoint, 'payload:', {
-        ...payload,
-        password: payload.password ? '***' : undefined
-      });
+      // console.log('[Login] Sending request to', endpoint, 'payload:', {
+      //   ...payload,
+      //   password: payload.password ? '***' : undefined
+      // });
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -159,7 +159,7 @@ const Login = ({ onLogin }) => {
       });
 
       const data = await response.json().catch(() => ({}));
-      console.log('[Login] Response body:', data);
+      // console.log('[Login] Response body:', data);
 
       if (response.ok) {
         onLogin({
