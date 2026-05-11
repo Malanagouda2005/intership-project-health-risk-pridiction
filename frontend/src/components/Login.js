@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import getApiBaseUrl, { isAndroidPlatform, API_OVERRIDE_STORAGE_KEY, isCapacitorWebView } from '../apiConfig';
-
+// import getApiBaseUrl, { isAndroidPlatform, API_OVERRIDE_STORAGE_KEY, isCapacitorWebView } from '../apiConfig';
+import getApiBaseUrl, { API_OVERRIDE_STORAGE_KEY } from '../apiConfig';
 const Login = ({ onLogin }) => {
   const [mode, setMode] = useState('login');
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [backendStatus, setBackendStatus] = useState('checking');
-  const [backendError, setBackendError] = useState('');
+  // const [backendError, setBackendError] = useState('');
   const [apiBase, setApiBase] = useState(getApiBaseUrl());
 
   const normalizeApiUrl = (value) => {
