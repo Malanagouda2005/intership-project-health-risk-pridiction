@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import getApiBaseUrl, { API_OVERRIDE_STORAGE_KEY } from '../apiConfig';
+import getApiBaseUrl, { isAndroidPlatform, API_OVERRIDE_STORAGE_KEY, isCapacitorWebView } from '../apiConfig';
 
 const Login = ({ onLogin }) => {
   const [mode, setMode] = useState('login');
@@ -13,49 +13,95 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [backendStatus, setBackendStatus] = useState('checking');
+  const [backendError, setBackendError] = useState('');
   const [apiBase, setApiBase] = useState(getApiBaseUrl());
+
+  const normalizeApiUrl = (value) => {
+    if (!value) return '';
+    let url = "https://health-ai-project-internship-app-final.onrender.com/";
+    if (!/^https?:\/\//i.test(url)) url = `http://${url}`;
+    try {
+      return new URL(url).origin;
+    } catch {
+      return '';
+    }
+  };
+
+  // Log platform info on mount
+  useEffect(() => {
+    console.log('[Login] Platform Detection:');
+    console.log('  - Is Android:', isAndroidPlatform());
+    console.log('  - Is Capacitor WebView:', isCapacitorWebView());
+    console.log('  - User Agent:', navigator.userAgent);
+    console.log('  - Window Location:', window.location.href);
+    console.log('  - Backend URL:', apiBase);
+  }, [apiBase]);
 
   // Test backend connection
   useEffect(() => {
     let isMounted = true;
+    const controller = new AbortController();
+
     const testConnection = async () => {
+      if (!apiBase) {
+        if (isMounted) {
+          setBackendStatus('error');
+          setBackendError('Backend URL is invalid');
+        }
+        return;
+      }
+
       try {
         setBackendStatus('checking');
+        setBackendError('');
+        console.log('[Login] Sending status request to', `${apiBase}/api/status`);
+
+        const timeoutId = window.setTimeout(() => controller.abort(), 5000);
         const response = await fetch(`${apiBase}/api/status`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          signal: AbortSignal.timeout(5000)
+          signal: controller.signal
         });
-        if (isMounted) {
-          if (response.ok) {
-            setBackendStatus('connected');
-          } else {
-            setBackendStatus('error');
-          }
+        window.clearTimeout(timeoutId);
+        console.log('[Login] Status response', response.status, response.statusText);
+
+        if (!isMounted) return;
+
+        if (response.ok) {
+          setBackendStatus('connected');
+          setBackendError('');
+        } else {
+          setBackendStatus('error');
+          setBackendError(`${response.status} ${response.statusText}`);
         }
       } catch (err) {
-        if (isMounted) {
-          console.error('Connection test failed:', err);
-          setBackendStatus('error');
-        }
+        if (!isMounted) return;
+        console.error('Connection test failed:', err);
+        setBackendStatus('error');
+        setBackendError(err.name === 'AbortError' ? 'Request timed out' : err.message);
       }
     };
 
-    const timer = setTimeout(testConnection, 500);
+    const timer = window.setTimeout(testConnection, 500);
     return () => {
       isMounted = false;
-      clearTimeout(timer);
+      controller.abort();
+      window.clearTimeout(timer);
     };
   }, [apiBase]);
 
   const handleUpdateApi = () => {
-    const newApi = prompt('Enter Backend URL (e.g. http://192.168.1.5:5000):', apiBase);
-    if (newApi && newApi.startsWith('http')) {
-      localStorage.setItem(API_OVERRIDE_STORAGE_KEY, newApi);
-      setApiBase(newApi);
+    const rawValue = prompt('Enter Backend URL (e.g. http://192.168.1.5:5000):', apiBase);
+    if (!rawValue) return;
+
+    const normalized = normalizeApiUrl(rawValue);
+    if (normalized) {
+      localStorage.setItem(API_OVERRIDE_STORAGE_KEY, normalized);
+      setApiBase(normalized);
       setError('');
-    } else if (newApi) {
-      alert('URL must start with http:// or https://');
+      setBackendError('');
+    } else {
+      alert('Enter a valid backend URL like http://10.75.149.30:5000');
     }
   };
 
@@ -101,6 +147,10 @@ const Login = ({ onLogin }) => {
         email: formData.email,
         password: formData.password
       };
+      console.log('[Login] Sending request to', endpoint, 'payload:', {
+        ...payload,
+        password: payload.password ? '***' : undefined
+      });
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -109,6 +159,7 @@ const Login = ({ onLogin }) => {
       });
 
       const data = await response.json().catch(() => ({}));
+      console.log('[Login] Response body:', data);
 
       if (response.ok) {
         onLogin({
@@ -135,7 +186,7 @@ const Login = ({ onLogin }) => {
       <div className="auth-card">
         <div className="card-header">
           <div className="brand-icon">🏥</div>
-          <h2>Health AI</h2>
+          <h1>Health AI</h1>
           <p>{isRegister ? 'Create an account' : 'Sign in to your dashboard'}</p>
         </div>
 
@@ -162,11 +213,15 @@ const Login = ({ onLogin }) => {
           </span>
         </div>
 
-        <div className="status-indicator">
+        {/* <div className="status-indicator">
           <div className={`status-dot ${backendStatus}`}></div>
-          <span>Backend: {backendStatus === 'connected' ? 'Online' : backendStatus === 'checking' ? 'Connecting...' : 'Offline'}</span>
+          <div className="status-info">
+            <span>Backend: {backendStatus === 'connected' ? 'Online' : backendStatus === 'checking' ? 'Connecting...' : 'Offline'}</span>
+            <span className="current-api">{apiBase}</span>
+            {backendError && <span className="backend-error">{backendError}</span>}
+          </div>
           <button onClick={handleUpdateApi} className="change-btn">Change Server</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
