@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
-import getApiBaseUrl from '../apiConfig';
+
+const API_BASE_URL =
+  'https://health-ai-project-internship-app-final.onrender.com';
 
 const Login = ({ onLogin }) => {
   const [mode, setMode] = useState('login');
@@ -16,37 +18,17 @@ const Login = ({ onLogin }) => {
   const [emailError, setEmailError] = useState('');
   const [backendStatus, setBackendStatus] = useState('checking');
 
-  const [apiBase] = useState(
-    'https://health-ai-project-internship-app-final.onrender.com'
-  );
-
-  // Test backend connection
+  // Check backend status
   useEffect(() => {
     let isMounted = true;
-    const controller = new AbortController();
 
-    const testConnection = async () => {
-      if (!apiBase) {
-        if (isMounted) {
-          setBackendStatus('error');
-        }
-        return;
-      }
-
+    const checkBackend = async () => {
       try {
         setBackendStatus('checking');
 
-        const timeoutId = window.setTimeout(() => controller.abort(), 5000);
-
-        const response = await fetch(`${apiBase}/api/status`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          signal: controller.signal
-        });
-
-        window.clearTimeout(timeoutId);
+        const response = await fetch(
+          `${API_BASE_URL}/api/status`
+        );
 
         if (!isMounted) return;
 
@@ -56,24 +38,24 @@ const Login = ({ onLogin }) => {
           setBackendStatus('error');
         }
       } catch (err) {
-        if (!isMounted) return;
+        console.error(err);
 
-        console.error('Connection test failed:', err);
-        setBackendStatus('error');
+        if (isMounted) {
+          setBackendStatus('error');
+        }
       }
     };
 
-    const timer = window.setTimeout(testConnection, 500);
+    checkBackend();
 
     return () => {
       isMounted = false;
-      controller.abort();
-      window.clearTimeout(timer);
     };
-  }, [apiBase]);
+  }, []);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     return emailRegex.test(email);
   };
 
@@ -98,12 +80,14 @@ const Login = ({ onLogin }) => {
     setIsLoading(true);
     setError('');
 
+    // Email validation
     if (!validateEmail(formData.email)) {
       setEmailError('Invalid email format');
       setIsLoading(false);
       return;
     }
 
+    // Password match validation
     if (
       mode === 'register' &&
       formData.password !== formData.confirmPassword
@@ -116,8 +100,8 @@ const Login = ({ onLogin }) => {
     try {
       const endpoint =
         mode === 'login'
-          ? `${apiBase}/auth/login`
-          : `${apiBase}/users`;
+          ? `${API_BASE_URL}/auth/login`
+          : `${API_BASE_URL}/users`;
 
       const payload =
         mode === 'login'
@@ -152,11 +136,15 @@ const Login = ({ onLogin }) => {
           loginTime: new Date().toISOString()
         });
       } else {
-        setError(data.error || data.message || 'Server error');
+        setError(
+          data.error ||
+            data.message ||
+            'Authentication failed'
+        );
       }
     } catch (err) {
       setError(
-        `Network error: ${err.message}. Check your internet and server status.`
+        `Network error: ${err.message}`
       );
     } finally {
       setIsLoading(false);
@@ -180,7 +168,10 @@ const Login = ({ onLogin }) => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form
+          onSubmit={handleSubmit}
+          className="auth-form"
+        >
           <input
             type="email"
             name="email"
@@ -191,7 +182,9 @@ const Login = ({ onLogin }) => {
           />
 
           {emailError && (
-            <span className="field-error">{emailError}</span>
+            <span className="field-error">
+              {emailError}
+            </span>
           )}
 
           <input
@@ -215,16 +208,21 @@ const Login = ({ onLogin }) => {
           )}
 
           {error && (
-            <div className="error-message">{error}</div>
+            <div className="error-message">
+              {error}
+            </div>
           )}
 
           <button
             type="submit"
             className="auth-submit-btn"
-            disabled={isLoading || backendStatus === 'error'}
+            disabled={
+              isLoading ||
+              backendStatus === 'error'
+            }
           >
             {isLoading
-              ? 'Wait...'
+              ? 'Please wait...'
               : isRegister
               ? 'Register'
               : 'Login'}
@@ -234,7 +232,11 @@ const Login = ({ onLogin }) => {
         <div className="auth-toggle">
           <span
             onClick={() =>
-              setMode(isRegister ? 'login' : 'register')
+              setMode(
+                isRegister
+                  ? 'login'
+                  : 'register'
+              )
             }
           >
             {isRegister
