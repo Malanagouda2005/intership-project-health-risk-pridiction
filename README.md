@@ -5,7 +5,7 @@ A machine learning-based web application that predicts potential health risks ba
 A full-stack healthcare application that predicts diseases using **medical images** and **patient symptoms/reports**.
 
 ---
-..
+.//
 
 ## 🚀 Features
 
