@@ -14,7 +14,7 @@ A full-stack healthcare application that predicts diseases using **medical image
 * 💻 Modern React-based user interface
 * ⚙️ Flask backend API
 * 🚀 GPU-supported model training (TensorFlow)
-
+#..#
 ---
 
 ## 🛠️ Tech Stack
