@@ -3,7 +3,6 @@ A machine learning-based web application that predicts potential health risks ba
 # 🏥 Health AI Prediction System
 
 A full-stack healthcare application that predicts diseases using **medical images** and **patient symptoms/reports**.
-
 ---
 .//
 
